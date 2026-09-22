@@ -42,6 +42,7 @@ class Product(BaseModel):
     price: float
     image_url: str = ""
     description: str = ""
+    images: List[str] = Field(default_factory=list)
     sweat_proof: bool = True
     daily_wear: bool = True
     anti_tarnish: bool = True
@@ -57,6 +58,7 @@ class ProductInput(BaseModel):
     price: float = Field(gt=0)
     image_url: str = ""
     description: str = ""
+    images: List[str] = Field(default_factory=list)
     sweat_proof: bool = True
     daily_wear: bool = True
     anti_tarnish: bool = True

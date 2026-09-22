@@ -7,6 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 
 from lib.auth import current_user, require_admin, require_user
 from lib.db import db
+from lib.email_service import send_order_confirmation
 from models.schemas import Order, OrderInput, StatusInput
 
 router = APIRouter(tags=["orders"])
@@ -44,6 +45,7 @@ async def pay_order(order_id: str, user: dict = Depends(require_user)):
         raise HTTPException(status_code=404, detail="Order not found")
     await db.orders.update_one({"id": order_id}, {"$set": {"payment_status": "paid"}})
     doc["payment_status"] = "paid"
+    await send_order_confirmation(doc)
     return Order(**doc)
 
 

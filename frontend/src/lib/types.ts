@@ -15,6 +15,7 @@ export interface Product {
   price: number;
   image_url: string;
   description: string;
+  images: string[];
   sweat_proof: boolean;
   daily_wear: boolean;
   anti_tarnish: boolean;
@@ -30,6 +31,7 @@ export interface ProductInput {
   price: number;
   image_url: string;
   description: string;
+  images: string[];
   sweat_proof: boolean;
   daily_wear: boolean;
   anti_tarnish: boolean;

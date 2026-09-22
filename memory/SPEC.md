@@ -8,8 +8,8 @@ Fonts: Outfit Variable (headings, Century Gothic stand-in) + Plus Jakarta Sans. 
 
 ## Data model (backend/models/schemas.py ↔ frontend/src/lib/types.ts)
 - User: id, name, email, role (customer|admin), created_at (+ password_hash, not exposed)
-- Product: id, name, category, metal (gold|silver), price, image_url, description,
-  sweat_proof, daily_wear, anti_tarnish, stock, is_new, created_at
+- Product: id, name, category, metal (gold|silver), price, image_url (primary), images[] (gallery),
+  description, sweat_proof, daily_wear, anti_tarnish, stock, is_new, created_at
 - Order: id, order_number (VRA…), user_id/email/name, items[], shipping, total,
   status (placed|shipped|delivered|cancelled), payment_status (pending|paid), payment_method
 - Feedback: id, name, email, rating 1-5, message, created_at
@@ -34,4 +34,14 @@ My Orders. Admin: product CRUD, purchase history with status control, all feedba
 ## Known deviations
 - Razorpay is in DEMO mode (no keys yet); POST /orders/{id}/pay marks the order paid.
 - Google sign-in not implemented (email/password only), agreed with the user.
-- WhatsApp number is a placeholder (`WHATSAPP_NUMBER` in frontend/src/lib/types.ts).
+- WhatsApp number: 919994034267 (`WHATSAPP_NUMBER` in frontend/src/lib/types.ts).
+
+## Later additions
+- Admin image uploads: POST /api/uploads (admin, multipart), served from GET /api/uploads/{file}.
+  Stored under backend/uploads/. Product primary image_url + additional images[] gallery.
+- Product detail has a swipeable Gallery (frontend/src/components/Gallery.tsx).
+- Back button on every page except home (frontend/src/components/BackButton.tsx).
+- Order confirmation email: Emergent-managed Resend (lib/email_service.py), sent best-effort
+  from pay_order. EMAIL_FROM_NAME=Veeraa. NOTE: the seeded demo customer email
+  (customer@veeraa.com) is non-deliverable test data → provider returns 422 (logged, checkout
+  unaffected). Real customer signups with real emails receive the confirmation.

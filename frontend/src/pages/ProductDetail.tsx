@@ -7,6 +7,7 @@ import type { Product } from "@/lib/types";
 import { rupees, whatsappLink } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/lib/cart";
+import Gallery from "@/components/Gallery";
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -34,12 +35,11 @@ export default function ProductDetail() {
 
   const p = data;
   const enquiry = whatsappLink(`Hi Veeraa, I'd like to know more about "${p.name}" (${rupees(p.price)}).`);
+  const galleryImages = Array.from(new Set([p.image_url, ...(p.images ?? [])].filter(Boolean)));
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-12 grid gap-10 lg:grid-cols-2" data-testid="product-detail-page">
-      <div className="rounded-2xl overflow-hidden border border-[#E7E0D6] bg-[#F3EDE4]">
-        <img src={p.image_url} alt={p.name} className="w-full object-cover aspect-square" />
-      </div>
+      <Gallery images={galleryImages} alt={p.name} />
 
       <div>
         <p className="text-xs uppercase tracking-[0.25em] text-amber-800">

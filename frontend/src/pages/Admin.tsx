@@ -25,6 +25,7 @@ const EMPTY: ProductInput = {
   price: 999,
   image_url: "",
   description: "",
+  images: [],
   sweat_proof: true,
   daily_wear: true,
   anti_tarnish: true,
@@ -41,6 +42,14 @@ export default function Admin() {
   const [editing, setEditing] = useState<Product | null>(null);
   const [form, setForm] = useState<ProductInput>(EMPTY);
   const [uploading, setUploading] = useState(false);
+
+  async function uploadFile(file: File): Promise<string | null> {
+    const body = new FormData();
+    body.append("file", file);
+    const res = await fetch("/api/uploads", { method: "POST", body });
+    if (!res.ok) return null;
+    return ((await res.json()) as { url: string }).url;
+  }
 
   const isAdmin = user?.role === "admin";
 
@@ -186,6 +195,7 @@ export default function Admin() {
                             price: p.price,
                             image_url: p.image_url,
                             description: p.description,
+                            images: p.images ?? [],
                             sweat_proof: p.sweat_proof,
                             daily_wear: p.daily_wear,
                             anti_tarnish: p.anti_tarnish,
@@ -397,11 +407,8 @@ export default function Admin() {
                       if (!file) return;
                       setUploading(true);
                       try {
-                        const body = new FormData();
-                        body.append("file", file);
-                        const res = await fetch("/api/uploads", { method: "POST", body });
-                        if (!res.ok) throw new Error();
-                        const { url } = (await res.json()) as { url: string };
+                        const url = await uploadFile(file);
+                        if (!url) throw new Error();
                         setForm((f) => ({ ...f, image_url: url }));
                         toast.success("Image uploaded");
                       } catch {
@@ -432,6 +439,66 @@ export default function Admin() {
                 onChange={(e) => setForm({ ...form, image_url: e.target.value })}
                 data-testid="admin-product-image-input"
               />
+            </div>
+
+            <div className="grid gap-2">
+              <Label>Additional photos (gallery)</Label>
+              {form.images.length > 0 && (
+                <div className="flex flex-wrap gap-2" data-testid="admin-gallery-thumbs">
+                  {form.images.map((src, i) => (
+                    <div key={`${src}-${i}`} className="relative">
+                      <img
+                        src={src}
+                        alt={`extra ${i + 1}`}
+                        className="size-16 rounded-lg object-cover border border-[#E7E0D6] bg-[#F3EDE4]"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setForm((f) => ({ ...f, images: f.images.filter((_, j) => j !== i) }))}
+                        className="absolute -top-2 -right-2 grid size-5 place-items-center rounded-full bg-stone-800 text-white text-xs"
+                        aria-label="Remove photo"
+                        data-testid={`admin-gallery-remove-${i}`}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <input
+                id="pf-gallery-file"
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                className="hidden"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  setUploading(true);
+                  try {
+                    const url = await uploadFile(file);
+                    if (!url) throw new Error();
+                    setForm((f) => ({ ...f, images: [...f.images, url] }));
+                    toast.success("Photo added to gallery");
+                  } catch {
+                    toast.error("Upload failed — try a JPG/PNG under 5 MB");
+                  } finally {
+                    setUploading(false);
+                    e.target.value = "";
+                  }
+                }}
+                data-testid="admin-gallery-file"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={uploading}
+                onClick={() => document.getElementById("pf-gallery-file")?.click()}
+                className="w-fit"
+                data-testid="admin-gallery-add-button"
+              >
+                <Upload className="size-4" /> Add gallery photo
+              </Button>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="pf-desc">Description</Label>
