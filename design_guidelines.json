@@ -1,0 +1,247 @@
+{
+  "theme_strategy": {
+    "polarity": "light",
+    "rationale": "Warm gold on soft ivory boutique aesthetic requested by the client. Fine jewellery shopping relies on warm, natural lighting, pristine metal reflections, and high-trust tactile luxury. Light warm ivory canvas with rich champagne gold and deep obsidian-bronze gives a high-end atelier feel.",
+    "emotional_archetype": "LUXURY_WARM_BOTANICAL_ATELIER"
+  },
+  "typography": {
+    "heading_font": "Outfit Variable",
+    "heading_font_family": "'Outfit Variable', -apple-system, BlinkMacSystemFont, sans-serif",
+    "body_font": "Plus Jakarta Sans Variable",
+    "body_font_family": "'Plus Jakarta Sans Variable', -apple-system, BlinkMacSystemFont, sans-serif",
+    "font_source_imports": [
+      "@import \"@fontsource-variable/outfit\";",
+      "@import \"@fontsource-variable/plus-jakarta-sans\";"
+    ],
+    "notes_on_century_gothic_alternative": "Century Gothic is a geometric circular sans with tall x-height and generous round bowls. Outfit Variable is the closest match from the pre-bundled font manifest, delivering that modern circular geometric luxury silhouette paired with Plus Jakarta Sans for body legibility.",
+    "scale_px": {
+      "display": 56,
+      "h1": 44,
+      "h2": 32,
+      "h3": 22,
+      "body": 16,
+      "caption": 14
+    },
+    "typesetting_rules": {
+      "hero_h1": "text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-[1.1] text-stone-900 font-heading",
+      "section_h2": "text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight leading-snug text-stone-900 font-heading",
+      "sub_heading": "text-lg sm:text-xl font-light tracking-normal text-stone-700 leading-relaxed",
+      "overline": "text-xs uppercase tracking-[0.25em] font-medium text-amber-800",
+      "body": "text-base leading-relaxed text-stone-700 font-sans",
+      "body_muted": "text-sm leading-relaxed text-stone-600",
+      "price_highlight": "text-lg font-semibold tracking-tight text-amber-950 font-heading"
+    }
+  },
+  "colors": {
+    "surfaces": [
+      {
+        "name": "page",
+        "kind": "solid",
+        "bg": "#FAF7F2",
+        "on_bg": "#1C1917",
+        "on_bg_muted": "#57534E",
+        "roles": {
+          "link": "#854D0E",
+          "error": "#991B1B",
+          "success": "#166534",
+          "warning": "#854D0E"
+        }
+      },
+      {
+        "name": "panel",
+        "kind": "solid",
+        "bg": "#FFFFFF",
+        "on_bg": "#1C1917",
+        "on_bg_muted": "#57534E",
+        "roles": {
+          "link": "#854D0E",
+          "error": "#991B1B",
+          "success": "#166534"
+        }
+      },
+      {
+        "name": "warm_card",
+        "kind": "solid",
+        "bg": "#F5EFE6",
+        "on_bg": "#1C1917",
+        "on_bg_muted": "#57534E"
+      },
+      {
+        "name": "gold_badge",
+        "kind": "solid",
+        "bg": "#FEF3C7",
+        "on_bg": "#78350F",
+        "on_bg_muted": "#92400E"
+      },
+      {
+        "name": "silver_badge",
+        "kind": "solid",
+        "bg": "#F1F5F9",
+        "on_bg": "#1E293B",
+        "on_bg_muted": "#475569"
+      },
+      {
+        "name": "attribute_pill",
+        "kind": "solid",
+        "bg": "#EFEAE1",
+        "on_bg": "#292524",
+        "on_bg_muted": "#57534E"
+      },
+      {
+        "name": "inverse",
+        "kind": "solid",
+        "bg": "#1C1917",
+        "on_bg": "#FAFAF9",
+        "on_bg_muted": "#D6D3D1",
+        "roles": {
+          "link": "#FDE68A",
+          "error": "#FCA5A5",
+          "success": "#86EFAC"
+        }
+      },
+      {
+        "name": "admin_sidebar",
+        "kind": "solid",
+        "bg": "#181513",
+        "on_bg": "#F5F5F4",
+        "on_bg_muted": "#A8A29E"
+      },
+      {
+        "name": "hero",
+        "kind": "image",
+        "contrast_against": "#1C1917",
+        "guarantee": "scrim: linear-gradient(to right, rgba(28,25,23,0.82) 0%, rgba(28,25,23,0.55) 50%, rgba(28,25,23,0.2) 100%)",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#E7E5E4",
+        "roles": {
+          "link": "#FDE68A",
+          "error": "#FCA5A5",
+          "success": "#86EFAC"
+        }
+      },
+      {
+        "name": "glass_header",
+        "kind": "glass",
+        "contrast_against": "#FAF7F2",
+        "guarantee": "backdrop-blur-md bg-stone-50/90 border-b border-stone-200/80 shadow-xs",
+        "on_bg": "#1C1917",
+        "on_bg_muted": "#57534E"
+      }
+    ],
+    "accent": "#92400E",
+    "on_accent": "#FFFFFF",
+    "brand_gold": "#B45309",
+    "brand_gold_hover": "#78350F",
+    "brand_gold_light": "#FDE68A",
+    "silver_tone": "#475569",
+    "whatsapp_green": "#15803D",
+    "on_whatsapp": "#FFFFFF",
+    "border_subtle": "#E7E0D6",
+    "border_focus": "#B45309"
+  },
+  "entry_surfaces": {
+    "/": "split hero — brand story, feature callouts (Sweat Proof, Daily Wear, Anti-Tarnish) & Explore CTA left; luxury model photo with floating craftsmanship tag right",
+    "/login": "branded split login — atelier brand heritage & customer benefits panel left, login tab with role switch right",
+    "/admin": "dense admin console — dark-tint obsidian sidebar left, metrics overview & product/order/feedback management table right"
+  },
+  "visual_enhancers": {
+    "texture": "subtle warm noise on ivory cards, hairline 1px gold borders (#D7C9B1)",
+    "borders": "1px solid #E6DEC8 on cards, delicate 0.5px champagne highlights",
+    "shadows": "soft diffuse shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+    "radii": "rounded-2xl for hero & feature blocks, rounded-xl for product cards, rounded-full for badges & action pills",
+    "jewellery_badges": {
+      "sweat_proof": "bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs px-2.5 py-1 rounded-full font-medium flex items-center gap-1.5",
+      "daily_wear": "bg-amber-50 text-amber-900 border border-amber-200 text-xs px-2.5 py-1 rounded-full font-medium flex items-center gap-1.5",
+      "hypoallergenic": "bg-stone-100 text-stone-800 border border-stone-300 text-xs px-2.5 py-1 rounded-full font-medium flex items-center gap-1.5",
+      "gold_plated": "bg-amber-100/70 text-amber-950 border border-amber-300 text-xs px-2.5 py-1 rounded-full font-medium",
+      "925_silver": "bg-slate-100 text-slate-800 border border-slate-300 text-xs px-2.5 py-1 rounded-full font-medium"
+    }
+  },
+  "image_urls": {
+    "hero_banner": {
+      "url": "https://images.unsplash.com/photo-1585960622850-ed33c41d6418?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwzfHxnb2xkJTIwamV3ZWxyeSUyMG1vZGVsJTIwZWxlZ2FudHxlbnwwfHx8fDE3OTAwNTY5OTR8MA&ixlib=rb-4.1.0&q=85",
+      "category": "Hero Banner / Brand Visual",
+      "description": "Elegant model wearing radiant gold layered necklace on warm backdrop"
+    },
+    "hero_secondary_model": {
+      "url": "https://images.unsplash.com/photo-1633934542430-0905ccb5f050?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwxfHxnb2xkJTIwamV3ZWxyeSUyMG1vZGVsJTIwZWxlZ2FudHxlbnwwfHx8fDE3OTAwNTY5OTR8MA&ixlib=rb-4.1.0&q=85",
+      "category": "Editorial Showcase / Daily Wear Look",
+      "description": "Close up of gold rings and dainty necklace for daily elegance"
+    },
+    "category_earrings": {
+      "url": "https://images.unsplash.com/photo-1651160670627-2896ddf7822f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHw0fHxnb2xkJTIwamV3ZWxyeSUyMG1vZGVsJTIwZWxlZ2FudHxlbnwwfHx8fDE3OTAwNTY5OTR8MA&ixlib=rb-4.1.0&q=85",
+      "category": "Category Tile: Earrings",
+      "description": "Exquisite gold statement earrings and drop jhumkas"
+    },
+    "category_chains_necklaces": {
+      "url": "https://images.unsplash.com/photo-1611107683227-e9060eccd846?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwzfHxnb2xkJTIwc2lsdmVyJTIwcmluZ3MlMjBlYXJyaW5ncyUyMGJyYWNlbGV0fGVufDB8fHx8MTc5MDA1Njk5NHww&ixlib=rb-4.1.0&q=85",
+      "category": "Category Tile: Chains & Necklaces",
+      "description": "Gold herringbone and paperclip chain necklace on white marble"
+    },
+    "category_rings": {
+      "url": "https://images.unsplash.com/photo-1626122509259-ea8e0a136ada?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHw0fHxnb2xkJTIwc2lsdmVyJTIwcmluZ3MlMjBlYXJyaW5ncyUyMGJyYWNlbGV0fGVufDB8fHx8MTc5MDA1Njk5NHww&ixlib=rb-4.1.0&q=85",
+      "category": "Category Tile: Rings",
+      "description": "Stackable gold and diamond-accent rings on hand"
+    },
+    "category_bracelets": {
+      "url": "https://images.unsplash.com/photo-1608042314453-ae338d80c427?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwyfHxnb2xkJTIwc2lsdmVyJTIwcmluZ3MlMjBlYXJyaW5ncyUyMGJyYWNlbGV0fGVufDB8fHx8MTc5MDA1Njk5NHww&ixlib=rb-4.1.0&q=85",
+      "category": "Category Tile: Bracelets & Bangles",
+      "description": "Delicate gold charm bracelet on soft silk display"
+    },
+    "curated_collection": {
+      "url": "https://images.pexels.com/photos/7679889/pexels-photo-7679889.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "category": "Curated Tray Display",
+      "description": "Assorted gold and silver earrings, rings, and chains on ceramic tray"
+    },
+    "boutique_atelier": {
+      "url": "https://images.pexels.com/photos/31301818/pexels-photo-31301818.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "category": "Boutique Atmosphere / Heritage",
+      "description": "Veeraa atelier boutique showcase with warm luminous lighting"
+    }
+  },
+  "grids_and_layouts": {
+    "header_nav": "Sticky glass navbar (backdrop-blur-md bg-stone-50/95 border-b border-stone-200/80 px-4 sm:px-8 py-3.5) with Veeraa logo in Outfit Variable, Category Dropdown / direct links (Earrings, Chains, Rings, Bracelets), Track Order & Exchange tabs, Search, WhatsApp direct connect, Cart Drawer button with item badge, and Profile/Admin menu.",
+    "hero_section": "Asymmetric 12-column grid: 7 cols left (Heritage tag, headline 'Everyday Luxury Crafted to Last', feature trio pills 'Waterproof · Sweatproof · 18k Gold & 925 Silver', Shop Collection CTA, WhatsApp Concierge CTA), 5 cols right (Hero portrait in rounded-3xl container with floating 'Anti-Tarnish 365 Days Guaranteed' gold pill).",
+    "just_arrived_section": "Bento showcase: Large spotlight item (col-span-12 md:col-span-5) with big imagery and detailed attributes + 4-grid items (col-span-12 md:col-span-7 grid grid-cols-2 gap-4). Each card features metal badge (18k Gold Plated / 925 Sterling Silver), Sweatproof & Daily Wear tags, INR price with strikethrough, Quick Add to Cart, WhatsApp Enquiry trigger, and fast preview modal.",
+    "category_tiles_grid": "4-column responsive grid (grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6) with smooth zoom on hover, subtle gold border on active card, showing piece count and starting price in INR (e.g. 'From ₹899').",
+    "product_feature_explainer": "3-column interactive feature matrix: 'Sweat Proof & Waterproof' (how PVD gold coating protects through workouts & showers), 'Daily Wear Durability' (hypoallergenic base metals, zero nickel), 'Atelier Craftsmanship' (hand-polished 925 silver & 18k gold tone).",
+    "homepage_utility_tabs": "Seamless Tabbed Section on Homepage with smooth tab switching: Tab 1 'Track Your Order' (Instant live order lookup by Order ID or phone with step-by-step progress tracker); Tab 2 'Exchange & Return Policy' (7-day hassle-free doorstep exchange request form + policy highlights); Tab 3 'Customer Feedback & Love' (Interactive Star Rating + feedback submission that saves straight to MongoDB and streams directly into Admin Dashboard).",
+    "product_detail_page": "Split layout: Left 6-col high-res image zoom gallery with thumbnail switcher; Right 6-col sticky purchase module with metal selector (18K Gold Plated / 925 Silver), ring/chain size selector with size guide modal, 'Sweat Proof & Daily Wear' badge stack, live stock indicator, Pincode delivery estimator, WhatsApp 1-click enquiry with pre-filled product name, Razorpay-style instant buy & Add to Bag buttons, collapsible accordion (Care Guide, Material & Specs, Delivery & Returns).",
+    "cart_and_checkout": "Slide-out Cart Sheet + Full Checkout Page with Razorpay test simulator (Card, UPI / GPay / PhonePe, Netbanking, Cash on Delivery with verification), coupon code apply ('VEERAA10'), order summary with shipping breakdown in INR (₹), and customer address capture.",
+    "admin_dashboard": "Comprehensive tabbed Admin Suite (accessible with credentials or demo switch): 1. Products Manager (Add/Edit/Delete products, toggle Sweat Proof, Daily Wear, Stock, Category, Image URL, Price, Metal Type); 2. All Orders & Purchase History (View customer name, items, order status dropdown 'Processing', 'Shipped', 'Out for Delivery', 'Delivered', payment mode, invoice generator); 3. Customer Feedbacks Box (View all submitted ratings, testimonials, approve for website display, sentiment tags, reply note)."
+  },
+  "motion": {
+    "hover_states": "transition-transform duration-300 hover:-translate-y-1 hover:shadow-md",
+    "image_zoom": "transition-transform duration-500 ease-out group-hover:scale-105",
+    "tab_transition": "animate-in fade-in duration-200",
+    "cart_drawer": "transition-all duration-300 ease-in-out",
+    "accessibility_motion": "prefers-reduced-motion respected via standard tailwind motion-safe classes"
+  },
+  "accessibility": {
+    "contrast_guarantee": "All text colors achieve at least 4.5:1 WCAG AA contrast against their respective parent surface. Dark warm text #1C1917 and #57534E on #FAF7F2 page and #FFFFFF panels reach > 7:1 contrast.",
+    "button_focus": "focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 outline-none",
+    "touch_targets": "Minimum 44px by 44px clickable areas for all buttons, inputs, and drawer handles.",
+    "testing_attributes": "All interactive elements (buttons, inputs, filters, tabs, WhatsApp links, checkout buttons, admin action controls) have semantic data-testid attributes."
+  },
+  "instructions_to_main_agent": {
+    "store_name": "Veeraa",
+    "tagline": "Modern Gold Plated & 925 Silver Jewellery · Crafted for Everyday Brilliance",
+    "currency_symbol": "₹",
+    "locale_format": "en-IN (e.g. ₹1,499, ₹2,899, ₹899)",
+    "font_setup": "Import Outfit Variable and Plus Jakarta Sans Variable in frontend/src/index.css. Use --font-heading: 'Outfit Variable', sans-serif and --font-sans: 'Plus Jakarta Sans Variable', sans-serif.",
+    "whatsapp_integration": "Generate direct WhatsApp link on product detail and cart (e.g., https://wa.me/919876543210?text=Hello%20Veeraa,%20I%20am%20interested%20in%20...) with prefilled product title, price, and SKU.",
+    "key_product_attributes": "Every product item must clearly display: 1. Metal Type (18k Gold Plated or 925 Sterling Silver), 2. 'Sweat Proof' boolean + badge, 3. 'Daily Wear' boolean + badge, 4. Anti-Tarnish warranty, 5. Price in ₹ with original price and discount badge.",
+    "homepage_tabs_requirement": "Homepage must include the interactive 'Track Your Order', 'Exchange & Returns', and 'Feedback Box' tabs with working mock and live API submission.",
+    "admin_and_customer_auth": "Provide seamless login/signup with role toggle (Customer vs Admin) with pre-filled test credentials for instant evaluation (e.g. admin@veeraa.com / admin123; customer@veeraa.com / customer123) and ability to manage products, purchase histories, and customer feedback.",
+    "seed_data_recommendation": "Seed at least 12 exquisite jewellery items across all 4 categories (Earrings, Chains/Necklaces, Rings, Bracelets) with realistic high-resolution images, INR pricing, sweatproof/dailywear tags, and at least 4 seeded orders and 4 customer feedbacks."
+  },
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Never use dark color gradients. Use clean warm solid surfaces with subtle 1px border highlights.",
+    "Every interactive element (buttons, tabs, inputs, cards, status toggles) MUST have kebab-case data-testid attributes for automated testing.",
+    "Avoid generic centered layouts. Use editorial asymmetric grids and bento card hierarchies.",
+    "Ensure all forms use Shadcn base components with explicit labels, error states, and responsive padding.",
+    "Use Sonner for toasts placed at bottom-right.",
+    "Ensure the header is sticky with crystal glass styling (backdrop-blur-md bg-stone-50/95) so nav links remain crisp and legible at all times.",
+    "All prices should be formatted in Indian Rupee format (₹) with comma separation (e.g., ₹1,299)."
+  ]
+}
