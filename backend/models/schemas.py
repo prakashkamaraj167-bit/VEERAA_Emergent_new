@@ -37,6 +37,15 @@ class RoleInput(BaseModel):
     role: str
 
 
+class ForgotInput(BaseModel):
+    email: EmailStr
+
+
+class ResetInput(BaseModel):
+    token: str = Field(min_length=8)
+    password: str = Field(min_length=6)
+
+
 # ---------- Products ----------
 class Product(BaseModel):
     id: str = Field(default_factory=_uid)

@@ -17,7 +17,11 @@ Fonts: Outfit Variable (headings, Century Gothic stand-in) + Plus Jakarta Sans. 
 ## Endpoints (all under /api)
 auth: POST /auth/signup, /auth/login, /auth/logout; GET /auth/me (httpOnly cookie session).
 GET /auth/users (admin), PATCH /auth/users/{id}/role (admin — promote/demote; blocks
-self-demote and removing the last admin). Signup always creates role=customer.
+self-demote and removing the last admin), DELETE /auth/users/{id} (admin — blocks self-delete
+and removing the last admin; also clears that user's sessions). Signup always creates role=customer.
+password reset: POST /auth/forgot {email} (always returns ok, emails a 1h magic link if the
+account exists), POST /auth/reset {token,password} (single-use token, clears sessions).
+Reset link = {APP_URL}/reset-password?token=... . Pages: /forgot-password, /reset-password.
 products: GET /products?category=&metal=&q=, GET /products/{id}; POST/PUT/DELETE (admin)
 orders: POST /orders (auth), POST /orders/{id}/pay (simulated Razorpay), GET /orders/mine,
 GET /orders (admin), PATCH /orders/{id}/status (admin), GET /track/{order_number} (public)

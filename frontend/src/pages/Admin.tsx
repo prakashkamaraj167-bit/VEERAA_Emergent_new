@@ -125,6 +125,21 @@ export default function Admin() {
     onError: () => toast.error("Could not update the order"),
   });
 
+  const deleteUser = useMutation({
+    mutationFn: (id: string) => apiDelete<{ ok: boolean }>(`/auth/users/${id}`),
+    onSuccess: () => {
+      toast.success("Account removed");
+      qc.invalidateQueries({ queryKey: ["admin-users"] });
+    },
+    onError: (e) => {
+      const detail =
+        e && typeof e === "object" && "body" in e
+          ? String((e as { body?: { detail?: string } }).body?.detail ?? "")
+          : "";
+      toast.error(detail || "Could not remove the account");
+    },
+  });
+
   if (!isLoading && !isAdmin) {
     return (
       <div className="mx-auto max-w-2xl px-5 py-20" data-testid="admin-denied">
@@ -340,7 +355,7 @@ export default function Admin() {
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Role</TableHead>
-                  <TableHead className="text-right">Action</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -360,26 +375,42 @@ export default function Admin() {
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
-                        {u.role === "admin" ? (
+                        <div className="inline-flex items-center gap-2">
+                          {u.role === "admin" ? (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              disabled={isSelf || setRole.isPending}
+                              onClick={() => setRole.mutate({ id: u.id, role: "customer" })}
+                              data-testid={`admin-demote-${u.id}`}
+                            >
+                              <UserRound className="size-4" /> {isSelf ? "You" : "Make customer"}
+                            </Button>
+                          ) : (
+                            <Button
+                              size="sm"
+                              disabled={setRole.isPending}
+                              onClick={() => setRole.mutate({ id: u.id, role: "admin" })}
+                              data-testid={`admin-promote-${u.id}`}
+                            >
+                              <ShieldCheck className="size-4" /> Make admin
+                            </Button>
+                          )}
                           <Button
-                            size="sm"
-                            variant="outline"
-                            disabled={isSelf || setRole.isPending}
-                            onClick={() => setRole.mutate({ id: u.id, role: "customer" })}
-                            data-testid={`admin-demote-${u.id}`}
+                            size="icon-sm"
+                            variant="ghost"
+                            disabled={isSelf || deleteUser.isPending}
+                            onClick={() => {
+                              if (window.confirm(`Remove ${u.name}'s account? This cannot be undone.`)) {
+                                deleteUser.mutate(u.id);
+                              }
+                            }}
+                            data-testid={`admin-delete-user-${u.id}`}
+                            aria-label="Delete account"
                           >
-                            <UserRound className="size-4" /> {isSelf ? "You" : "Make customer"}
+                            <Trash2 className="size-4" />
                           </Button>
-                        ) : (
-                          <Button
-                            size="sm"
-                            disabled={setRole.isPending}
-                            onClick={() => setRole.mutate({ id: u.id, role: "admin" })}
-                            data-testid={`admin-promote-${u.id}`}
-                          >
-                            <ShieldCheck className="size-4" /> Make admin
-                          </Button>
-                        )}
+                        </div>
                       </TableCell>
                     </TableRow>
                   );

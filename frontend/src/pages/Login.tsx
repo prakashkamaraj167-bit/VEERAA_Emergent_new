@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { apiPost, ApiError } from "@/lib/api";
@@ -103,6 +103,11 @@ export default function Login() {
           </TabsContent>
         ))}
       </Tabs>
+      <p className="mt-6 text-center text-sm">
+        <Link to="/forgot-password" className="text-amber-800 hover:underline" data-testid="forgot-password-link">
+          Forgot your password?
+        </Link>
+      </p>
     </div>
   );
 }

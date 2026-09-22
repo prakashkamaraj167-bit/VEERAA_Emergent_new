@@ -6,6 +6,8 @@ import ProductDetail from "@/pages/ProductDetail";
 import CartPage from "@/pages/CartPage";
 import Checkout from "@/pages/Checkout";
 import Login from "@/pages/Login";
+import ForgotPassword from "@/pages/ForgotPassword";
+import ResetPassword from "@/pages/ResetPassword";
 import MyOrders from "@/pages/MyOrders";
 import TrackOrder from "@/pages/TrackOrder";
 import Exchange from "@/pages/Exchange";
@@ -21,6 +23,8 @@ export default function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/my-orders" element={<MyOrders />} />
         <Route path="/track" element={<TrackOrder />} />
         <Route path="/exchange" element={<Exchange />} />

@@ -111,7 +111,6 @@ async def _send(*, to: str, subject: str, html: str) -> str | None:
 
 
 async def send_order_confirmation(order: dict) -> None:
-    """Best-effort. Recipient + content from the server-side order record only."""
     to = order.get("user_email", "")
     if not to:
         return
@@ -145,3 +144,31 @@ async def send_order_confirmation(order: dict) -> None:
         await _send(to=to, subject=subject, html=html)
     except Exception as e:  # never let email break checkout
         logger.error(f"Order confirmation email failed: {e}")
+
+
+async def send_password_reset(user: dict, link: str) -> None:
+    """Best-effort. `link` is a first-party HTTPS reset URL built server-side."""
+    to = user.get("email", "")
+    if not to or not link.lower().startswith("https://"):
+        return
+    name = escape(str(user.get("name") or "there"))
+    safe_link = escape(link, quote=True)
+    subject = f"Reset your {EMAIL_FROM_NAME} password"
+    html = (
+        '<table role="presentation" width="100%" style="max-width:520px;margin:0 auto;'
+        'font-family:Arial,Helvetica,sans-serif"><tr><td style="padding:24px">'
+        f'<h1 style="font-size:20px;color:#78350f;margin:0 0 4px">{escape(EMAIL_FROM_NAME)}</h1>'
+        f'<p style="color:#1c1917">Hi {name}, we received a request to reset your password.</p>'
+        f'<p style="margin:20px 0"><a href="{safe_link}" '
+        'style="background:#92400e;color:#ffffff;text-decoration:none;padding:12px 22px;'
+        'border-radius:8px;display:inline-block">Reset your password</a></p>'
+        '<p style="color:#57534e;font-size:13px">This link expires in 1 hour. If you did not '
+        'request this, you can safely ignore this email — your password stays unchanged.</p>'
+        '<p style="font-size:12px;color:#888;margin-top:24px">Sent by '
+        f'{escape(EMAIL_FROM_NAME)}. We never ask for your password or card details by email.'
+        '</p></td></tr></table>'
+    )
+    try:
+        await _send(to=to, subject=subject, html=html)
+    except Exception as e:
+        logger.error(f"Password reset email failed: {e}")
