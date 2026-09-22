@@ -64,11 +64,13 @@ from routers.auth import router as auth_router
 from routers.products import router as products_router
 from routers.orders import router as orders_router
 from routers.feedback import router as feedback_router
+from routers.uploads import router as uploads_router
 
 api_router.include_router(auth_router)
 api_router.include_router(products_router)
 api_router.include_router(orders_router)
 api_router.include_router(feedback_router)
+api_router.include_router(uploads_router)
 
 # Include the router in the main app
 app.include_router(api_router)

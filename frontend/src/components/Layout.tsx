@@ -3,6 +3,7 @@ import { ShoppingBag, Menu, LogOut, LayoutDashboard, Package } from "lucide-reac
 import { Toaster } from "@/components/ui/sonner";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
+import BackButton from "@/components/BackButton";
 import { useCart } from "@/lib/cart";
 import { useAuth, useSession } from "@/lib/session";
 import { whatsappLink } from "@/lib/types";
@@ -127,7 +128,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <main className="flex-1">{children}</main>
+      <main className="flex-1">
+        <BackButton />
+        {children}
+      </main>
 
       <footer className="border-t border-[#E7E0D6] bg-white/60 mt-20">
         <div className="mx-auto max-w-6xl px-5 py-12 grid gap-8 sm:grid-cols-3">

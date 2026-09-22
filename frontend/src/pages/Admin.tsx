@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Pencil, Trash2, Plus, Star } from "lucide-react";
+import { Pencil, Trash2, Plus, Star, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { apiDelete, apiGet, apiPatch, apiPost, apiPut } from "@/lib/api";
 import type { Feedback, Order, Product, ProductInput } from "@/lib/types";
@@ -40,6 +40,7 @@ export default function Admin() {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Product | null>(null);
   const [form, setForm] = useState<ProductInput>(EMPTY);
+  const [uploading, setUploading] = useState(false);
 
   const isAdmin = user?.role === "admin";
 
@@ -373,9 +374,60 @@ export default function Admin() {
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="pf-image">Image URL</Label>
+              <Label htmlFor="pf-image">Product image</Label>
+              <div className="flex items-center gap-3">
+                {form.image_url ? (
+                  <img
+                    src={form.image_url}
+                    alt="preview"
+                    className="size-16 rounded-lg object-cover border border-[#E7E0D6] bg-[#F3EDE4]"
+                    data-testid="admin-product-image-preview"
+                  />
+                ) : (
+                  <div className="size-16 rounded-lg border border-dashed border-[#E7E0D6] bg-[#F3EDE4]" />
+                )}
+                <div className="flex-1">
+                  <input
+                    id="pf-image-file"
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      setUploading(true);
+                      try {
+                        const body = new FormData();
+                        body.append("file", file);
+                        const res = await fetch("/api/uploads", { method: "POST", body });
+                        if (!res.ok) throw new Error();
+                        const { url } = (await res.json()) as { url: string };
+                        setForm((f) => ({ ...f, image_url: url }));
+                        toast.success("Image uploaded");
+                      } catch {
+                        toast.error("Upload failed — try a JPG/PNG under 5 MB");
+                      } finally {
+                        setUploading(false);
+                        e.target.value = "";
+                      }
+                    }}
+                    data-testid="admin-product-image-file"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={uploading}
+                    onClick={() => document.getElementById("pf-image-file")?.click()}
+                    data-testid="admin-product-upload-button"
+                  >
+                    <Upload className="size-4" /> {uploading ? "Uploading…" : "Upload image"}
+                  </Button>
+                </div>
+              </div>
               <Input
                 id="pf-image"
+                placeholder="…or paste an image URL"
                 value={form.image_url}
                 onChange={(e) => setForm({ ...form, image_url: e.target.value })}
                 data-testid="admin-product-image-input"

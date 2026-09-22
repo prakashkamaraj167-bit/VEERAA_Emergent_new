@@ -83,7 +83,11 @@ export interface PaymentConfig {
   key_id: string;
 }
 
-export const WHATSAPP_NUMBER = "919876543210"; // placeholder — change to the store number
+export const WHATSAPP_NUMBER = "919994034267"; // Veeraa store WhatsApp
+
+export interface UploadResult {
+  url: string;
+}
 export const CATEGORIES = ["earrings", "chains", "rings", "bracelets"] as const;
 
 export function rupees(n: number): string {
