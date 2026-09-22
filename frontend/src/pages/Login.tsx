@@ -103,12 +103,6 @@ export default function Login() {
           </TabsContent>
         ))}
       </Tabs>
-
-      <div className="mt-8 rounded-lg border border-[#E7E0D6] bg-white p-4 text-xs text-stone-600">
-        <p className="font-medium text-stone-800">Demo accounts</p>
-        <p className="mt-1">Admin — admin@veeraa.com / Admin@123</p>
-        <p>Customer — customer@veeraa.com / Customer@123</p>
-      </div>
     </div>
   );
 }
