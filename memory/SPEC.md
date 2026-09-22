@@ -22,6 +22,9 @@ and removing the last admin; also clears that user's sessions). Signup always cr
 password reset: POST /auth/forgot {email} (always returns ok, emails a 1h magic link if the
 account exists), POST /auth/reset {token,password} (single-use token, clears sessions).
 Reset link = {APP_URL}/reset-password?token=... . Pages: /forgot-password, /reset-password.
+profile: PATCH /auth/profile {name} (signed-in user updates their own name). Customer
+Account page (/account): edit name, view saved addresses (deduped from their orders' shipping),
+email read-only. Header "Account" link for customers.
 products: GET /products?category=&metal=&q=, GET /products/{id}; POST/PUT/DELETE (admin)
 orders: POST /orders (auth), POST /orders/{id}/pay (simulated Razorpay), GET /orders/mine,
 GET /orders (admin), PATCH /orders/{id}/status (admin), GET /track/{order_number} (public)

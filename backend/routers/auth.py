@@ -14,7 +14,15 @@ from lib.auth import (
 )
 from lib.db import db
 from lib.email_service import send_password_reset
-from models.schemas import ForgotInput, LoginInput, ResetInput, RoleInput, SignupInput, User
+from models.schemas import (
+    ForgotInput,
+    LoginInput,
+    NameInput,
+    ResetInput,
+    RoleInput,
+    SignupInput,
+    User,
+)
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -55,6 +63,16 @@ async def me(request: Request):
     user = await current_user(request)
     if not user:
         raise HTTPException(status_code=401, detail="Not signed in")
+    return User(**user)
+
+
+@router.patch("/profile", response_model=User)
+async def update_profile(payload: NameInput, request: Request):
+    user = await current_user(request)
+    if not user:
+        raise HTTPException(status_code=401, detail="Not signed in")
+    await db.users.update_one({"id": user["id"]}, {"$set": {"name": payload.name.strip()}})
+    user["name"] = payload.name.strip()
     return User(**user)
 
 

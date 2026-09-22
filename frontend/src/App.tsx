@@ -9,6 +9,7 @@ import Login from "@/pages/Login";
 import ForgotPassword from "@/pages/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword";
 import MyOrders from "@/pages/MyOrders";
+import Account from "@/pages/Account";
 import TrackOrder from "@/pages/TrackOrder";
 import Exchange from "@/pages/Exchange";
 import Admin from "@/pages/Admin";
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/my-orders" element={<MyOrders />} />
+        <Route path="/account" element={<Account />} />
         <Route path="/track" element={<TrackOrder />} />
         <Route path="/exchange" element={<Exchange />} />
         <Route path="/admin" element={<Admin />} />

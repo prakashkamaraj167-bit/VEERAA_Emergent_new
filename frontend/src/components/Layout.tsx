@@ -104,11 +104,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </Link>
                 ) : (
                   <Link
-                    to="/my-orders"
+                    to="/account"
                     className={buttonVariants({ variant: "ghost", size: "sm" })}
-                    data-testid="my-orders-link"
+                    data-testid="account-link"
                   >
-                    <Package className="size-4" /> My Orders
+                    <Package className="size-4" /> Account
                   </Link>
                 )}
                 <Button variant="ghost" size="sm" onClick={logout} data-testid="logout-button">
