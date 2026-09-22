@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Pencil, Trash2, Plus, Star, Upload } from "lucide-react";
+import { Pencil, Trash2, Plus, Star, Upload, ShieldCheck, UserRound } from "lucide-react";
 import { toast } from "sonner";
 import { apiDelete, apiGet, apiPatch, apiPost, apiPut } from "@/lib/api";
-import type { Feedback, Order, Product, ProductInput } from "@/lib/types";
+import type { Feedback, Order, Product, ProductInput, User } from "@/lib/types";
 import { rupees, CATEGORIES } from "@/lib/types";
 import { useAuth } from "@/lib/session";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -69,6 +69,28 @@ export default function Admin() {
     queryFn: () => apiGet<Feedback[]>("/feedback"),
     enabled: isAdmin,
     retry: false,
+  });
+  const users = useQuery<User[]>({
+    queryKey: ["admin-users"],
+    queryFn: () => apiGet<User[]>("/auth/users"),
+    enabled: isAdmin,
+    retry: false,
+  });
+
+  const setRole = useMutation({
+    mutationFn: (v: { id: string; role: string }) =>
+      apiPatch<User>(`/auth/users/${v.id}/role`, { role: v.role }),
+    onSuccess: (u) => {
+      toast.success(`${u.name} is now ${u.role === "admin" ? "an admin" : "a customer"}`);
+      qc.invalidateQueries({ queryKey: ["admin-users"] });
+    },
+    onError: (e) => {
+      const detail =
+        e && typeof e === "object" && "body" in e
+          ? String((e as { body?: { detail?: string } }).body?.detail ?? "")
+          : "";
+      toast.error(detail || "Could not update the role");
+    },
   });
 
   const save = useMutation({
@@ -145,6 +167,9 @@ export default function Admin() {
           </TabsTrigger>
           <TabsTrigger value="feedback" data-testid="admin-tab-feedback">
             Feedback
+          </TabsTrigger>
+          <TabsTrigger value="users" data-testid="admin-tab-users">
+            Users
           </TabsTrigger>
         </TabsList>
 
@@ -303,6 +328,69 @@ export default function Admin() {
                 <p className="mt-2 text-xs text-stone-500">{new Date(f.created_at).toLocaleString()}</p>
               </div>
             ))}
+          </div>
+        </TabsContent>
+
+        {/* Users */}
+        <TabsContent value="users">
+          <div className="mt-5 rounded-xl border border-[#E7E0D6] bg-white" data-testid="admin-users-table">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead className="text-right">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {(users.data ?? []).map((u) => {
+                  const isSelf = u.id === user?.id;
+                  return (
+                    <TableRow key={u.id} data-testid={`admin-user-row-${u.id}`}>
+                      <TableCell className="font-medium">{u.name}</TableCell>
+                      <TableCell className="text-stone-600">{u.email}</TableCell>
+                      <TableCell>
+                        <Badge
+                          variant={u.role === "admin" ? "secondary" : "outline"}
+                          className="capitalize"
+                          data-testid={`admin-user-role-${u.id}`}
+                        >
+                          {u.role}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {u.role === "admin" ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            disabled={isSelf || setRole.isPending}
+                            onClick={() => setRole.mutate({ id: u.id, role: "customer" })}
+                            data-testid={`admin-demote-${u.id}`}
+                          >
+                            <UserRound className="size-4" /> {isSelf ? "You" : "Make customer"}
+                          </Button>
+                        ) : (
+                          <Button
+                            size="sm"
+                            disabled={setRole.isPending}
+                            onClick={() => setRole.mutate({ id: u.id, role: "admin" })}
+                            data-testid={`admin-promote-${u.id}`}
+                          >
+                            <ShieldCheck className="size-4" /> Make admin
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+            {(users.data ?? []).length === 0 && (
+              <p className="p-5 text-sm text-stone-600" data-testid="admin-users-empty">
+                No users yet.
+              </p>
+            )}
           </div>
         </TabsContent>
       </Tabs>

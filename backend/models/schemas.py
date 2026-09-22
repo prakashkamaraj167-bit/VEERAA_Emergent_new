@@ -33,6 +33,10 @@ class LoginInput(BaseModel):
     password: str
 
 
+class RoleInput(BaseModel):
+    role: str
+
+
 # ---------- Products ----------
 class Product(BaseModel):
     id: str = Field(default_factory=_uid)

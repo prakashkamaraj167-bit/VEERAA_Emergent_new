@@ -15,7 +15,9 @@ Fonts: Outfit Variable (headings, Century Gothic stand-in) + Plus Jakarta Sans. 
 - Feedback: id, name, email, rating 1-5, message, created_at
 
 ## Endpoints (all under /api)
-auth: POST /auth/signup, /auth/login, /auth/logout; GET /auth/me (httpOnly cookie session)
+auth: POST /auth/signup, /auth/login, /auth/logout; GET /auth/me (httpOnly cookie session).
+GET /auth/users (admin), PATCH /auth/users/{id}/role (admin — promote/demote; blocks
+self-demote and removing the last admin). Signup always creates role=customer.
 products: GET /products?category=&metal=&q=, GET /products/{id}; POST/PUT/DELETE (admin)
 orders: POST /orders (auth), POST /orders/{id}/pay (simulated Razorpay), GET /orders/mine,
 GET /orders (admin), PATCH /orders/{id}/status (admin), GET /track/{order_number} (public)
