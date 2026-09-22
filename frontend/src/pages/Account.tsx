@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { MapPin } from "lucide-react";
+import { MapPin, Heart, X } from "lucide-react";
 import { toast } from "sonner";
-import { apiGet, apiPatch } from "@/lib/api";
-import type { Order, Shipping, User } from "@/lib/types";
+import { apiDelete, apiGet, apiPatch } from "@/lib/api";
+import type { Order, Product, Shipping, User } from "@/lib/types";
+import { rupees } from "@/lib/types";
 import { useAuth } from "@/lib/session";
+import { useWishlist } from "@/lib/wishlist";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,6 +20,16 @@ export default function Account() {
   const { user, isLoading } = useAuth();
   const qc = useQueryClient();
   const [name, setName] = useState("");
+  const { items: wishlist } = useWishlist();
+
+  const removeWish = useMutation({
+    mutationFn: (id: string) => apiDelete<{ ok: boolean }>(`/wishlist/${id}`),
+    onSuccess: () => {
+      toast.success("Removed from wishlist");
+      qc.invalidateQueries({ queryKey: ["wishlist"] });
+    },
+    onError: () => toast.error("Could not update your wishlist"),
+  });
 
   useEffect(() => {
     if (user) setName(user.name);
@@ -139,6 +151,46 @@ export default function Account() {
           </Link>
         </section>
       </div>
+
+      <section className="mt-8 rounded-xl border border-[#E7E0D6] bg-white p-6" data-testid="account-wishlist">
+        <h2 className="flex items-center gap-2 font-heading text-lg text-stone-900">
+          <Heart className="size-5 text-red-500" /> My wishlist
+        </h2>
+        {wishlist.length === 0 ? (
+          <p className="mt-4 text-sm text-stone-600" data-testid="account-wishlist-empty">
+            No saved pieces yet — tap the heart on any product to save it here.
+          </p>
+        ) : (
+          <div className="mt-5 grid gap-4 grid-cols-2 lg:grid-cols-4" data-testid="account-wishlist-items">
+            {wishlist.map((p: Product) => (
+              <div
+                key={p.id}
+                className="relative rounded-xl border border-[#E7E0D6] overflow-hidden bg-white"
+                data-testid={`wishlist-item-${p.id}`}
+              >
+                <button
+                  type="button"
+                  onClick={() => removeWish.mutate(p.id)}
+                  aria-label="Remove from wishlist"
+                  className="absolute top-2 right-2 grid size-7 place-items-center rounded-full bg-white/85 text-stone-700 shadow-sm transition-transform duration-200 hover:scale-110"
+                  data-testid={`wishlist-remove-${p.id}`}
+                >
+                  <X className="size-4" />
+                </button>
+                <Link to={`/product/${p.id}`} data-testid={`wishlist-link-${p.id}`}>
+                  <div className="aspect-square bg-[#F3EDE4]">
+                    <img src={p.image_url} alt={p.name} className="size-full object-cover" />
+                  </div>
+                  <div className="p-3">
+                    <p className="font-heading text-sm text-stone-900 leading-snug">{p.name}</p>
+                    <p className="mt-1 font-heading text-sm font-semibold text-amber-950">{rupees(p.price)}</p>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }

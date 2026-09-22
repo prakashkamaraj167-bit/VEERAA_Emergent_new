@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { apiGet, apiPost } from "@/lib/api";
-import type { Order, PaymentConfig } from "@/lib/types";
+import type { Order, PaymentConfig, Shipping } from "@/lib/types";
 import { rupees } from "@/lib/types";
 import { useCart, cartTotal, clearCart } from "@/lib/cart";
 import { useAuth } from "@/lib/session";
@@ -18,6 +18,24 @@ export default function Checkout() {
   const navigate = useNavigate();
   const [placed, setPlaced] = useState<Order | null>(null);
   const [form, setForm] = useState({ full_name: "", phone: "", address: "", city: "", pincode: "" });
+
+  const { data: myOrders } = useQuery<Order[]>({
+    queryKey: ["my-orders"],
+    queryFn: () => apiGet<Order[]>("/orders/mine"),
+    enabled: !!user,
+    retry: false,
+  });
+
+  const savedAddresses: Shipping[] = [];
+  const seen = new Set<string>();
+  for (const o of myOrders ?? []) {
+    const s = o.shipping;
+    const k = `${s.full_name}|${s.address}|${s.city}|${s.pincode}|${s.phone}`.toLowerCase();
+    if (!seen.has(k)) {
+      seen.add(k);
+      savedAddresses.push(s);
+    }
+  }
 
   const { data: config } = useQuery<PaymentConfig>({
     queryKey: ["payment-config"],
@@ -90,6 +108,33 @@ export default function Checkout() {
           }}
           data-testid="checkout-form"
         >
+          {savedAddresses.length > 0 && (
+            <div className="sm:col-span-2 grid gap-2" data-testid="checkout-saved-addresses">
+              <Label>Use a saved address</Label>
+              <div className="flex flex-wrap gap-2">
+                {savedAddresses.map((a, i) => (
+                  <button
+                    key={`${a.address}-${i}`}
+                    type="button"
+                    onClick={() =>
+                      setForm({
+                        full_name: a.full_name,
+                        phone: a.phone,
+                        address: a.address,
+                        city: a.city,
+                        pincode: a.pincode,
+                      })
+                    }
+                    className="rounded-lg border border-[#E7E0D6] bg-[#FAF7F2] px-3 py-2 text-left text-xs text-stone-700 transition-colors duration-200 hover:border-amber-700"
+                    data-testid={`checkout-address-option-${i}`}
+                  >
+                    <span className="font-medium text-stone-900">{a.full_name}</span> · {a.city}{" "}
+                    {a.pincode}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           {(
             [
               ["full_name", "Full name", "sm:col-span-2"],

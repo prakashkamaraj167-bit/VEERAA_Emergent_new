@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Droplets, Sun } from "lucide-react";
 import { rupees } from "@/lib/types";
 import type { Product } from "@/lib/types";
+import WishlistButton from "@/components/WishlistButton";
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
@@ -10,7 +11,7 @@ export default function ProductCard({ product }: { product: Product }) {
       className="group block rounded-xl border border-[#E7E0D6] bg-white overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-md"
       data-testid={`product-card-${product.id}`}
     >
-      <div className="aspect-square overflow-hidden bg-[#F3EDE4]">
+      <div className="relative aspect-square overflow-hidden bg-[#F3EDE4]">
         <img
           src={product.image_url}
           alt={product.name}
@@ -18,6 +19,7 @@ export default function ProductCard({ product }: { product: Product }) {
           className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
           data-testid={`product-image-${product.id}`}
         />
+        <WishlistButton productId={product.id} className="absolute top-2 right-2" />
       </div>
       <div className="p-4">
         <div className="flex items-start justify-between gap-3">

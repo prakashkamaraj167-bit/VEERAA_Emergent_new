@@ -8,6 +8,7 @@ import { rupees, whatsappLink } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/lib/cart";
 import Gallery from "@/components/Gallery";
+import WishlistButton from "@/components/WishlistButton";
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -42,9 +43,12 @@ export default function ProductDetail() {
       <Gallery images={galleryImages} alt={p.name} />
 
       <div>
-        <p className="text-xs uppercase tracking-[0.25em] text-amber-800">
-          {p.metal === "gold" ? "18k Gold Plated" : "925 Sterling Silver"}
-        </p>
+        <div className="flex items-start justify-between gap-3">
+          <p className="text-xs uppercase tracking-[0.25em] text-amber-800">
+            {p.metal === "gold" ? "18k Gold Plated" : "925 Sterling Silver"}
+          </p>
+          <WishlistButton productId={p.id} className="border border-[#E7E0D6]" />
+        </div>
         <h1
           className="mt-3 font-heading text-3xl sm:text-4xl font-light tracking-tight text-stone-900"
           data-testid="product-detail-name"
